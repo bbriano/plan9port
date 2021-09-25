@@ -239,6 +239,7 @@ rpc_attach(Client *c, char *label, char *winsize)
 	NSArray *allDevices;
 
 	NSWindowStyleMask Winstyle = NSWindowStyleMaskTitled
+		| NSWindowStyleMaskFullSizeContentView
 		| NSWindowStyleMaskClosable
 		| NSWindowStyleMaskMiniaturizable
 		| NSWindowStyleMaskResizable;
@@ -267,6 +268,13 @@ rpc_attach(Client *c, char *label, char *winsize)
 		styleMask:Winstyle
 		backing:NSBackingStoreBuffered defer:NO];
 	[win setTitle:@"devdraw"];
+
+	/* Hide title bar and its contents. */
+	win.titlebarAppearsTransparent = true;
+	win.titleVisibility = NSWindowTitleHidden;
+	[[win standardWindowButton:NSWindowCloseButton] setHidden:YES];
+	[[win standardWindowButton:NSWindowMiniaturizeButton] setHidden:YES];
+	[[win standardWindowButton:NSWindowZoomButton] setHidden:YES];
 
 	if(!set)
 		[win center];
